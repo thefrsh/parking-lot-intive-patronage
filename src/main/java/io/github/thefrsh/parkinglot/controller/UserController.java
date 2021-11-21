@@ -9,6 +9,8 @@ import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.Min;
+
 @Validated
 @RestController
 @RequestMapping(path = "/api/users")
@@ -24,21 +26,21 @@ public class UserController {
 
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
     @PatchMapping(path = "/{userId}/booked-spots/{spotId}")
-    public void createBooking(@PathVariable Long userId, @PathVariable Long spotId) {
+    public void createBooking(@Min(1) @PathVariable Long userId, @Min(1) @PathVariable Long spotId) {
 
         userService.createBooking(userId, spotId);
     }
 
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
     @DeleteMapping(path = "/{userId}/booked-spots/{spotId}")
-    public void deleteBooking(@PathVariable Long userId, @PathVariable Long spotId) {
+    public void deleteBooking(@Min(1) @PathVariable Long userId, @Min(1) @PathVariable Long spotId) {
 
         userService.deleteBooking(userId, spotId);
     }
 
     @ResponseStatus(code = HttpStatus.OK)
     @GetMapping(path = "/{userId}/booked-spots", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<ParkingSpotResponse> getBookedSpots(@PathVariable Long userId) {
+    public List<ParkingSpotResponse> getBookedSpots(@Min(1) @PathVariable Long userId) {
 
         return userService.getBookedSpots(userId);
     }
