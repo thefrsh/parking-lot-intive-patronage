@@ -1,8 +1,6 @@
 package io.github.thefrsh.parkinglot.model;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
@@ -29,6 +27,16 @@ public class User {
     )
     @Getter(value = AccessLevel.NONE)
     private List<ParkingSpot> bookedSpots;
+
+    public void addParkingSpot(ParkingSpot parkingSpot) {
+
+        bookedSpots.add(parkingSpot);
+    }
+
+    public void removeParkingSpot(ParkingSpot parkingSpot) {
+
+        bookedSpots.remove(parkingSpot);
+    }
 
     public io.vavr.collection.List<ParkingSpot> getBookedSpots() {
 
