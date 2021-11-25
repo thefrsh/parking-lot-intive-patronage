@@ -20,10 +20,10 @@ public class RestControllerExceptionHandler {
 
         var errors = new LinkedHashMap<String, Object>();
         errors.put("timestamp", new Date());
-        errors.put("path", request.getServletPath());
         errors.put("status", HttpStatus.BAD_REQUEST.value());
         errors.put("error", HttpStatus.BAD_REQUEST.getReasonPhrase());
         errors.put("message", e.getMessage());
+        errors.put("path", request.getServletPath());
 
         return errors;
     }
