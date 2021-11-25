@@ -12,4 +12,6 @@ public interface ParkingSpotRepository extends Repository<ParkingSpot, Long> {
 
     @Query("select p from ParkingSpot p where (p.owner is null and ?1 = true) or (p.owner is not null and ?1 = false)")
     List<ParkingSpot> findAllByOwnerIsNullDependingOnAvailable(Boolean available);
+
+    List<ParkingSpot> findAll();
 }
