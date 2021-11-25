@@ -4,6 +4,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * Data Transfer Object (DTO) representing ParkingSpot entity response from the controller
+ * @author Michal Broniewicz
+ */
 @Getter
 @Setter
 @NoArgsConstructor

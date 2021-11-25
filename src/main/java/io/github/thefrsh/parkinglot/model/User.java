@@ -6,6 +6,10 @@ import org.hibernate.validator.constraints.Length;
 import javax.persistence.*;
 import java.util.List;
 
+/**
+ * User entity representing the user of the system
+ * @author Michal Broniewicz
+ */
 @Entity
 @Getter
 @NoArgsConstructor

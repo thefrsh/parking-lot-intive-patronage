@@ -11,6 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * Performs domain operations on {@link ParkingSpot}
+ * @author Michal Broniewicz
+ */
 @Service
 public class ParkingSpotServiceImpl implements ParkingSpotService {
 
@@ -24,6 +28,13 @@ public class ParkingSpotServiceImpl implements ParkingSpotService {
         this.modelMapper = modelMapper;
     }
 
+    /**
+     * Returns the list of parking spots depending on availability
+     *
+     * @param  available     if true - available parking spots are returned, booked ones otherwise
+     * @return List of all available/not available parking spots
+     * @see    Transactional
+     */
     @Override
     @Transactional(readOnly = true)
     public List<ParkingSpotResponse> getParkingSpots(Boolean available) {
@@ -32,6 +43,13 @@ public class ParkingSpotServiceImpl implements ParkingSpotService {
                 .map(parkingSpot -> modelMapper.map(parkingSpot, ParkingSpotResponse.class));
     }
 
+    /**
+     * Returns {@link ParkingSpot} object defined by ID {@code id}
+     *
+     * @param id {@link ParkingSpot} ID
+     * @return   Parking Spot object
+     * @throws   ResourceNotFoundException if no parking spot is found
+     */
     @Override
     public ParkingSpot findParkingSpotById(Long id) {
 
