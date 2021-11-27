@@ -11,9 +11,22 @@ import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+/**
+ * Resolves exceptions that are not annotated with {@link ResponseStatus}
+ * @see RestControllerAdvice
+ *
+ * @author Michal Broniewicz
+ */
 @RestControllerAdvice
 public class RestControllerExceptionHandler {
 
+    /**
+     * Resolves {@link ConstraintViolationException}
+     *
+     * @param request Actual instance of {@link HttpServletRequest}
+     * @param e       Caught {@link ConstraintViolationException} class exception
+     * @return        Error response based on {@link org.springframework.boot.web.reactive.error.DefaultErrorAttributes}
+     */
     @ResponseStatus(code = HttpStatus.BAD_REQUEST)
     @ExceptionHandler(value = ConstraintViolationException.class)
     public Map<String, Object> handleConstraintViolationException(HttpServletRequest request, Exception e) {

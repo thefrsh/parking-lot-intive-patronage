@@ -15,6 +15,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * Performs domain operations on {@link User}
+ * @author Michal Broniewicz
+ */
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -31,6 +35,14 @@ public class UserServiceImpl implements UserService {
         this.modelMapper = modelMapper;
     }
 
+    /**
+     * Books the parking spot defined by {@code spotId} for the user defined by {@code userId}
+     *
+     * @param  userId           {@link io.github.thefrsh.parkinglot.model.User} ID
+     * @param  spotId           {@link io.github.thefrsh.parkinglot.model.ParkingSpot} ID
+     * @throws BookingException if parking spot has been already booked
+     * @see    Transactional
+     */
     @Override
     @Transactional(isolation = Isolation.REPEATABLE_READ)
     public void createBooking(Long userId, Long spotId) {
@@ -46,6 +58,14 @@ public class UserServiceImpl implements UserService {
                 .onEmpty(() -> user.addParkingSpot(parkingSpot));
     }
 
+    /**
+     * Deletes the booking of parking spot defined by {@code spotId} for the user with ID {@code userId}
+     *
+     * @param  userId           {@link io.github.thefrsh.parkinglot.model.User} ID
+     * @param  spotId           {@link io.github.thefrsh.parkinglot.model.ParkingSpot} ID
+     * @throws BookingException if parking spot was not booked by the user
+     * @see    Transactional
+     */
     @Override
     @Transactional
     public void deleteBooking(Long userId, Long spotId) {
@@ -61,6 +81,13 @@ public class UserServiceImpl implements UserService {
                 });
     }
 
+    /**
+     * Returns the list of all parking spots booked by user with ID {@code userId}
+     * @param  userId              {@link io.github.thefrsh.parkinglot.model.User} ID
+     * @return List of all booked spots by user defined by {@code userId}
+     * @see    ParkingSpotResponse
+     * @see    Transactional
+     */
     @Override
     @Transactional(readOnly = true)
     public List<ParkingSpotResponse> getBookedSpots(Long userId) {

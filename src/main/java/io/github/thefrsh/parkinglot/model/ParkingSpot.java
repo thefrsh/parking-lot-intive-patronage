@@ -6,6 +6,10 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 
+/**
+ * ParkingSpot entity representing single parking spot in the parking lot
+ * @author Michal Broniewicz
+ */
 @Entity
 @Getter
 @NoArgsConstructor
