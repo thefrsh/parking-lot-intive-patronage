@@ -10,7 +10,7 @@
     </parent>
     <groupId>io.github.thefrsh</groupId>
     <artifactId>parking-lot-intive-patronage</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.0-RELEASE</version>
     <name>parking-lot-intive-patronage</name>
     <description>Parking Lot REST API demo project for intive Patronage 2022</description>
     <properties>
