@@ -14,12 +14,14 @@ import java.util.Map;
 /**
  * Resolves exceptions that are not annotated with {@link ResponseStatus}
  * @see RestControllerAdvice
+ *
+ * @author Michal Broniewicz
  */
 @RestControllerAdvice
 public class RestControllerExceptionHandler {
 
     /**
-     * Resolves       {@link ConstraintViolationException}
+     * Resolves {@link ConstraintViolationException}
      *
      * @param request Actual instance of {@link HttpServletRequest}
      * @param e       Caught {@link ConstraintViolationException} class exception
