@@ -20,7 +20,7 @@ public class UserController {
     private final UserService userService;
 
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
-    @PatchMapping(path = "/{userId}/booked-spots/{spotId}")
+    @PostMapping(path = "/{userId}/booked-spots/{spotId}")
     public void createBooking(@Min(1) @PathVariable Long userId, @Min(1) @PathVariable Long spotId) {
 
         userService.createBooking(userId, spotId);

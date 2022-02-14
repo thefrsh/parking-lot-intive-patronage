@@ -43,7 +43,7 @@ public class UserTest {
         given()
                 .basePath(getBookingPath(userId, parkingSpotId))
         .when()
-                .patch()
+                .post()
         .then()
                 .statusCode(HttpStatus.NOT_FOUND.value());
     }
@@ -58,7 +58,7 @@ public class UserTest {
         given()
                 .basePath(getBookingPath(userId, parkingSpotId))
         .when()
-                .patch()
+                .post()
         .then()
                 .statusCode(HttpStatus.NOT_FOUND.value());
     }
@@ -73,7 +73,7 @@ public class UserTest {
         given()
                 .basePath(getBookingPath(userId, parkingSpotId))
         .when()
-                .patch()
+                .post()
         .then()
                 .statusCode(HttpStatus.CONFLICT.value());
     }
@@ -88,7 +88,7 @@ public class UserTest {
         given()
                 .basePath(getBookingPath(userId, parkingSpotId))
         .when()
-                .patch()
+                .post()
         .then()
                 .statusCode(HttpStatus.BAD_REQUEST.value());
     }
@@ -103,7 +103,7 @@ public class UserTest {
         given()
                 .basePath(getBookingPath(userId, parkingSpotId))
         .when()
-                .patch()
+                .post()
         .then()
                 .statusCode(HttpStatus.BAD_REQUEST.value());
     }
@@ -118,7 +118,7 @@ public class UserTest {
         given()
                 .basePath(getBookingPath(userId, parkingSpotId))
         .when()
-                .patch()
+                .post()
         .then()
                 .statusCode(HttpStatus.NO_CONTENT.value());
     }
