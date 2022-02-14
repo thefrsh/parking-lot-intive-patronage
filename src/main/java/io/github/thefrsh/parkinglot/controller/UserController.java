@@ -3,7 +3,7 @@ package io.github.thefrsh.parkinglot.controller;
 import io.github.thefrsh.parkinglot.dto.response.ParkingSpotResponse;
 import io.github.thefrsh.parkinglot.service.UserService;
 import io.vavr.collection.List;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
@@ -14,15 +14,10 @@ import javax.validation.constraints.Min;
 @Validated
 @RestController
 @RequestMapping(path = "/api/users")
+@RequiredArgsConstructor
 public class UserController {
 
     private final UserService userService;
-
-    @Autowired
-    public UserController(UserService userService) {
-
-        this.userService = userService;
-    }
 
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
     @PatchMapping(path = "/{userId}/booked-spots/{spotId}")

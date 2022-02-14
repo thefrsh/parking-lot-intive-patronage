@@ -6,8 +6,8 @@ import io.github.thefrsh.parkinglot.model.repository.ParkingSpotRepository;
 import io.github.thefrsh.parkinglot.service.ParkingSpotService;
 import io.github.thefrsh.parkinglot.troubleshooting.exception.ResourceNotFoundException;
 import io.vavr.collection.List;
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,17 +16,11 @@ import org.springframework.transaction.annotation.Transactional;
  * @author Michal Broniewicz
  */
 @Service
+@RequiredArgsConstructor
 public class ParkingSpotServiceImpl implements ParkingSpotService {
 
     private final ParkingSpotRepository parkingSpotRepository;
     private final ModelMapper modelMapper;
-
-    @Autowired
-    public ParkingSpotServiceImpl(ParkingSpotRepository parkingSpotRepository, ModelMapper modelMapper) {
-
-        this.parkingSpotRepository = parkingSpotRepository;
-        this.modelMapper = modelMapper;
-    }
 
     /**
      * Returns the list of parking spots depending on availability

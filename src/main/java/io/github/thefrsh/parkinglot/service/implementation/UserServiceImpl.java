@@ -9,8 +9,8 @@ import io.github.thefrsh.parkinglot.troubleshooting.exception.BookingException;
 import io.github.thefrsh.parkinglot.troubleshooting.exception.ResourceNotFoundException;
 import io.vavr.collection.List;
 import io.vavr.control.Option;
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,20 +20,12 @@ import org.springframework.transaction.annotation.Transactional;
  * @author Michal Broniewicz
  */
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final ParkingSpotService parkingSpotService;
     private final ModelMapper modelMapper;
-
-    @Autowired
-    public UserServiceImpl(UserRepository userRepository, ParkingSpotService parkingSpotService,
-                           ModelMapper modelMapper) {
-
-        this.userRepository = userRepository;
-        this.parkingSpotService = parkingSpotService;
-        this.modelMapper = modelMapper;
-    }
 
     /**
      * Books the parking spot defined by {@code spotId} for the user defined by {@code userId}
