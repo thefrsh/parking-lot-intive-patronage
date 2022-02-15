@@ -1,11 +1,8 @@
 package io.github.thefrsh.parkinglot;
 
-import io.github.thefrsh.parkinglot.dto.response.ParkingSpotResponse;
-import io.github.thefrsh.parkinglot.model.ParkingSpot;
-import io.github.thefrsh.parkinglot.model.repository.ParkingSpotRepository;
+import io.github.thefrsh.parkinglot.domain.booking.infrastructure.repository.ParkingSpotRepository;
+import io.github.thefrsh.parkinglot.infrastructure.model.ParkingSpot;
 import io.restassured.RestAssured;
-import io.vavr.collection.List;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,9 +12,8 @@ import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.annotation.DirtiesContext;
 
-import java.util.Arrays;
-
-import static io.restassured.RestAssured.*;
+import static io.restassured.RestAssured.given;
+import static org.hamcrest.Matchers.*;
 
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -55,25 +51,20 @@ public class ParkingSpotTest {
 
     private void availableParkingSpotListTest(boolean available) {
 
-        var expectedParkingSpots = parkingSpotRepository.findAll()
-                .filter(parkingSpot -> (parkingSpot.getOwner() == null) == available)
-                .map(ParkingSpot::getId);
+        var expectedParkingSpotIds = parkingSpotRepository.findAll()
+                .filter(parkingSpot -> (parkingSpot.getOwner().isEmpty()) == available)
+                .map(ParkingSpot::getId)
+                .map(Long::intValue)
+                .toJavaArray();
 
-        var parkingSpots = Arrays.stream(
-                given()
-                        .basePath("/api/parking-spots")
-                        .param("available", available)
-                .when()
-                        .get()
-                .then()
-                        .statusCode(HttpStatus.OK.value())
-                        .and()
-                        .extract()
-                        .as(ParkingSpotResponse[].class))
-                .map(ParkingSpotResponse::getId)
-                .collect(List.collector());
-
-        Assertions.assertEquals(expectedParkingSpots.size(), parkingSpots.size());
-        Assertions.assertTrue(expectedParkingSpots.containsAll(parkingSpots));
+        given()
+                .basePath("/api/parking-spots/search/by-availability")
+                .param("available", available)
+        .when()
+                .get()
+        .then()
+                .statusCode(HttpStatus.OK.value())
+                .body("_embedded.parkingSpot.size()", is(expectedParkingSpotIds.length))
+                .body("_embedded.parkingSpot.id", containsInAnyOrder(expectedParkingSpotIds));
     }
 }
