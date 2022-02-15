@@ -1,7 +1,7 @@
-package io.github.thefrsh.parkinglot.domain.booking.domain.booking.service;
+package io.github.thefrsh.parkinglot.domain.booking.domain.service;
 
 import io.github.thefrsh.parkinglot.infrastructure.model.ParkingSpot;
-import io.github.thefrsh.parkinglot.domain.booking.domain.booking.model.ParkingSpotBooker;
+import io.github.thefrsh.parkinglot.domain.booking.domain.model.ParkingSpotBooker;
 
 public interface BookingDomainService {
 

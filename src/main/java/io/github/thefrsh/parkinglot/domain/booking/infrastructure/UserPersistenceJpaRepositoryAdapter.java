@@ -1,6 +1,6 @@
 package io.github.thefrsh.parkinglot.domain.booking.infrastructure;
 
-import io.github.thefrsh.parkinglot.domain.booking.domain.booking.port.outgoing.UserPersistence;
+import io.github.thefrsh.parkinglot.domain.booking.domain.port.outgoing.UserPersistence;
 import io.github.thefrsh.parkinglot.domain.booking.infrastructure.repository.UserRepository;
 import io.github.thefrsh.parkinglot.infrastructure.model.User;
 import io.github.thefrsh.parkinglot.domain.booking.infrastructure.troubleshooting.exception.ResourceNotFoundException;

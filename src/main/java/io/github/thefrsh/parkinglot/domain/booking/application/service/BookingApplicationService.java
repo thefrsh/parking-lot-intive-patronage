@@ -1,10 +1,10 @@
 package io.github.thefrsh.parkinglot.domain.booking.application.service;
 
-import io.github.thefrsh.parkinglot.domain.booking.domain.booking.port.incoming.BookingCreator;
-import io.github.thefrsh.parkinglot.domain.booking.domain.booking.port.incoming.BookingDeleter;
-import io.github.thefrsh.parkinglot.domain.booking.domain.booking.port.outgoing.ParkingSpotPersistence;
-import io.github.thefrsh.parkinglot.domain.booking.domain.booking.port.outgoing.UserPersistence;
-import io.github.thefrsh.parkinglot.domain.booking.domain.booking.service.BookingDomainService;
+import io.github.thefrsh.parkinglot.domain.booking.domain.port.incoming.BookingCreator;
+import io.github.thefrsh.parkinglot.domain.booking.domain.port.incoming.BookingDeleter;
+import io.github.thefrsh.parkinglot.domain.booking.domain.port.outgoing.ParkingSpotPersistence;
+import io.github.thefrsh.parkinglot.domain.booking.domain.port.outgoing.UserPersistence;
+import io.github.thefrsh.parkinglot.domain.booking.domain.service.BookingDomainService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
