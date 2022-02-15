@@ -1,4 +1,4 @@
-package io.github.thefrsh.parkinglot.domain.booking.domain.booking.port.outgoing;
+package io.github.thefrsh.parkinglot.domain.booking.domain.port.outgoing;
 
 import io.github.thefrsh.parkinglot.infrastructure.Persistence;
 import io.github.thefrsh.parkinglot.infrastructure.model.User;

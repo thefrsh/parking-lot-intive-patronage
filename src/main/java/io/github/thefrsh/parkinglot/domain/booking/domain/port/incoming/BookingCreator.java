@@ -1,4 +1,4 @@
-package io.github.thefrsh.parkinglot.domain.booking.domain.booking.port.incoming;
+package io.github.thefrsh.parkinglot.domain.booking.domain.port.incoming;
 
 public interface BookingCreator {
 

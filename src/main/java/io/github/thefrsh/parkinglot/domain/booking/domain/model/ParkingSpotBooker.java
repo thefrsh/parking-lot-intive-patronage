@@ -1,4 +1,4 @@
-package io.github.thefrsh.parkinglot.domain.booking.domain.booking.model;
+package io.github.thefrsh.parkinglot.domain.booking.domain.model;
 
 import io.github.thefrsh.parkinglot.infrastructure.model.ParkingSpot;
 

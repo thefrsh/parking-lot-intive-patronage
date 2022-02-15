@@ -1,4 +1,4 @@
-package io.github.thefrsh.parkinglot.domain.booking.domain.booking.troubleshooting.exception;
+package io.github.thefrsh.parkinglot.domain.booking.domain.troubleshooting.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

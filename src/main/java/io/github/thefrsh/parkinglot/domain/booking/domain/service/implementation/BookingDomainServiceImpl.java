@@ -1,10 +1,10 @@
-package io.github.thefrsh.parkinglot.domain.booking.domain.booking.service.implementation;
+package io.github.thefrsh.parkinglot.domain.booking.domain.service.implementation;
 
-import io.github.thefrsh.parkinglot.domain.booking.domain.booking.service.BookingDomainService;
+import io.github.thefrsh.parkinglot.domain.booking.domain.service.BookingDomainService;
 import io.github.thefrsh.parkinglot.infrastructure.model.ParkingSpot;
-import io.github.thefrsh.parkinglot.domain.booking.domain.booking.model.ParkingSpotBooker;
+import io.github.thefrsh.parkinglot.domain.booking.domain.model.ParkingSpotBooker;
 import io.github.thefrsh.parkinglot.infrastructure.model.User;
-import io.github.thefrsh.parkinglot.domain.booking.domain.booking.troubleshooting.exception.BookingException;
+import io.github.thefrsh.parkinglot.domain.booking.domain.troubleshooting.exception.BookingException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

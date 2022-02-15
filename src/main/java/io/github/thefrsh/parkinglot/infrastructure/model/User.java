@@ -1,7 +1,7 @@
 package io.github.thefrsh.parkinglot.infrastructure.model;
 
-import io.github.thefrsh.parkinglot.domain.booking.domain.booking.model.ParkingSpotBooker;
-import io.github.thefrsh.parkinglot.domain.booking.domain.booking.troubleshooting.exception.BookingException;
+import io.github.thefrsh.parkinglot.domain.booking.domain.model.ParkingSpotBooker;
+import io.github.thefrsh.parkinglot.domain.booking.domain.troubleshooting.exception.BookingException;
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
 

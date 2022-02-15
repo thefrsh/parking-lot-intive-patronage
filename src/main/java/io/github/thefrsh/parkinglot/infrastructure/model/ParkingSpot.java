@@ -1,6 +1,6 @@
 package io.github.thefrsh.parkinglot.infrastructure.model;
 
-import io.github.thefrsh.parkinglot.domain.booking.domain.booking.model.Bookable;
+import io.github.thefrsh.parkinglot.domain.booking.domain.model.Bookable;
 import io.vavr.control.Option;
 import lombok.AccessLevel;
 import lombok.Getter;
