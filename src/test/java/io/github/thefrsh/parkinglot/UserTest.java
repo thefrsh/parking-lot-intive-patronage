@@ -1,12 +1,12 @@
 package io.github.thefrsh.parkinglot;
 
 import static io.restassured.RestAssured.*;
+import static org.hamcrest.Matchers.containsInAnyOrder;
+import static org.hamcrest.Matchers.is;
 
-import io.github.thefrsh.parkinglot.dto.response.ParkingSpotResponse;
-import io.github.thefrsh.parkinglot.model.repository.UserRepository;
+import io.github.thefrsh.parkinglot.domain.booking.infrastructure.repository.UserRepository;
+import io.github.thefrsh.parkinglot.infrastructure.model.ParkingSpot;
 import io.restassured.RestAssured;
-import io.vavr.collection.Stream;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -161,31 +161,20 @@ public class UserTest {
         final int userId = 1;
         var user = userRepository.findById((long) userId).get();
 
-        var bookedSpots =
+        var expectedParkingSpotIds = user.getBookedSpots()
+                .map(ParkingSpot::getId)
+                .map(Long::intValue)
+                .toJavaArray();
+
         given()
-                .basePath(getBookedPath(userId))
+               .basePath(getBookedPath())
+               .param("id", userId)
         .when()
-                .get()
+               .get()
         .then()
                 .statusCode(HttpStatus.OK.value())
-                .and()
-                .extract()
-                .as(ParkingSpotResponse[].class);
-
-        Assertions.assertEquals(user.getBookedSpots().size(), bookedSpots.length);
-
-        Stream.ofAll(user.getBookedSpots())
-                .zipWithIndex()
-                .forEach(tuple -> {
-
-                    var expected = tuple._1;
-                    var actual = bookedSpots[tuple._2];
-
-                    Assertions.assertEquals(expected.getId(), actual.getId());
-                    Assertions.assertEquals(expected.getNumber(), actual.getNumber());
-                    Assertions.assertEquals(expected.getStorey(), actual.getStorey());
-                    Assertions.assertEquals(expected.getDisability(), actual.getDisability());
-                });
+                .body("_embedded.parkingSpot.size()", is(expectedParkingSpotIds.length))
+                .body("_embedded.parkingSpot.id", containsInAnyOrder(expectedParkingSpotIds));
     }
 
     private String getBookingPath(int userId, int parkingSpotId) {
@@ -193,8 +182,8 @@ public class UserTest {
         return String.format("/api/users/%d/booked-spots/%d", userId, parkingSpotId);
     }
 
-    private String getBookedPath(int userId) {
+    private String getBookedPath() {
 
-        return String.format("/api/users/%d/booked-spots", userId);
+        return "/api/parking-spots/search/by-owner";
     }
 }
