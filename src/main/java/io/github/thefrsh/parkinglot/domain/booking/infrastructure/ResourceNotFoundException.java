@@ -1,4 +1,4 @@
-package io.github.thefrsh.parkinglot.domain.booking.infrastructure.troubleshooting.exception;
+package io.github.thefrsh.parkinglot.domain.booking.infrastructure;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  * @author Michal Broniewicz
  */
 @ResponseStatus(code = HttpStatus.NOT_FOUND)
-public class ResourceNotFoundException extends RuntimeException {
+class ResourceNotFoundException extends RuntimeException {
 
     public ResourceNotFoundException(String message) {
 

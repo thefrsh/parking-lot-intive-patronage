@@ -1,7 +1,7 @@
 package io.github.thefrsh.parkinglot;
 
-import io.github.thefrsh.parkinglot.domain.booking.infrastructure.repository.ParkingSpotRepository;
-import io.github.thefrsh.parkinglot.infrastructure.model.ParkingSpot;
+import io.github.thefrsh.parkinglot.domain.booking.domain.port.outgoing.ParkingSpotPersistence;
+import io.github.thefrsh.parkinglot.domain.booking.domain.model.ParkingSpot;
 import io.restassured.RestAssured;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -23,7 +23,7 @@ public class ParkingSpotTest {
     private int port;
 
     @Autowired
-    private ParkingSpotRepository parkingSpotRepository;
+    private ParkingSpotPersistence parkingSpotPersistence;
 
     @BeforeEach
     void setUp() {
@@ -51,7 +51,7 @@ public class ParkingSpotTest {
 
     private void availableParkingSpotListTest(boolean available) {
 
-        var expectedParkingSpotIds = parkingSpotRepository.findAll()
+        var expectedParkingSpotIds = parkingSpotPersistence.loadAll()
                 .filter(parkingSpot -> (parkingSpot.getOwner().isEmpty()) == available)
                 .map(ParkingSpot::getId)
                 .map(Long::intValue)

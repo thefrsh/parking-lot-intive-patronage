@@ -1,13 +1,13 @@
-package io.github.thefrsh.parkinglot.infrastructure.model;
+package io.github.thefrsh.parkinglot.domain.booking.domain.model;
 
-import io.github.thefrsh.parkinglot.domain.booking.domain.model.Bookable;
+import io.github.thefrsh.parkinglot.domain.sharedkernel.BaseEntity;
+import io.github.thefrsh.parkinglot.domain.sharedkernel.annotation.DomainEntity;
 import io.vavr.control.Option;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import javax.validation.constraints.Min;
 
 /**
  * ParkingSpot entity representing single parking spot in the parking lot
@@ -16,19 +16,15 @@ import javax.validation.constraints.Min;
 @Entity
 @Getter
 @NoArgsConstructor
-public class ParkingSpot implements Bookable {
+@Table(name = "parking_spots")
+@DomainEntity
+public class ParkingSpot extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Embedded
+    private Number number;
 
-    @Min(1)
-    @Column(nullable = false)
-    private Integer number;
-
-    @Min(1)
-    @Column(nullable = false)
-    private Integer storey;
+    @Embedded
+    private Storey storey;
 
     @Column(nullable = false)
     private Boolean disability;
@@ -40,14 +36,13 @@ public class ParkingSpot implements Bookable {
             inverseJoinColumns = @JoinColumn(name = "user_id")
     )
     @Getter(value = AccessLevel.NONE)
-    private User owner;
+    private Booker owner;
 
-    public Option<User> getOwner() {
+    public Option<Booker> getOwner() {
 
         return Option.of(owner);
     }
 
-    @Override
     public boolean bookable() {
 
         return owner == null;

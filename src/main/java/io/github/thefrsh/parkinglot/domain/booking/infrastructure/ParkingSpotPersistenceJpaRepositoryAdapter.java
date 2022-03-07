@@ -1,15 +1,14 @@
 package io.github.thefrsh.parkinglot.domain.booking.infrastructure;
 
 import io.github.thefrsh.parkinglot.domain.booking.domain.port.outgoing.ParkingSpotPersistence;
-import io.github.thefrsh.parkinglot.domain.booking.infrastructure.repository.ParkingSpotRepository;
-import io.github.thefrsh.parkinglot.domain.booking.infrastructure.troubleshooting.exception.ResourceNotFoundException;
-import io.github.thefrsh.parkinglot.infrastructure.model.ParkingSpot;
+import io.github.thefrsh.parkinglot.domain.booking.domain.model.ParkingSpot;
+import io.github.thefrsh.parkinglot.domain.sharedkernel.annotation.DomainRepository;
+import io.vavr.collection.List;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Repository;
 
-@Repository
+@DomainRepository
 @RequiredArgsConstructor
-public class ParkingSpotPersistenceJpaRepositoryAdapter implements ParkingSpotPersistence {
+class ParkingSpotPersistenceJpaRepositoryAdapter implements ParkingSpotPersistence {
 
     private final ParkingSpotRepository parkingSpotRepository;
 
@@ -19,5 +18,11 @@ public class ParkingSpotPersistenceJpaRepositoryAdapter implements ParkingSpotPe
         return parkingSpotRepository.findById(id).getOrElseThrow(() -> new ResourceNotFoundException(
                 String.format("Parking spot with id %d is not found", id)
         ));
+    }
+
+    @Override
+    public List<ParkingSpot> loadAll() {
+
+        return parkingSpotRepository.findAll();
     }
 }

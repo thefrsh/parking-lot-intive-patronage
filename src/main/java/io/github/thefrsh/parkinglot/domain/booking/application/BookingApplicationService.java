@@ -1,21 +1,21 @@
-package io.github.thefrsh.parkinglot.domain.booking.application.service;
+package io.github.thefrsh.parkinglot.domain.booking.application;
 
 import io.github.thefrsh.parkinglot.domain.booking.domain.port.incoming.BookingCreator;
 import io.github.thefrsh.parkinglot.domain.booking.domain.port.incoming.BookingDeleter;
 import io.github.thefrsh.parkinglot.domain.booking.domain.port.outgoing.ParkingSpotPersistence;
-import io.github.thefrsh.parkinglot.domain.booking.domain.port.outgoing.UserPersistence;
-import io.github.thefrsh.parkinglot.domain.booking.domain.service.BookingDomainService;
+import io.github.thefrsh.parkinglot.domain.booking.domain.port.outgoing.BookerPersistence;
+import io.github.thefrsh.parkinglot.domain.booking.domain.BookingService;
+import io.github.thefrsh.parkinglot.domain.sharedkernel.annotation.ApplicationService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
-@Service
+@ApplicationService
 @RequiredArgsConstructor
-public class BookingApplicationService implements BookingCreator, BookingDeleter {
+class BookingApplicationService implements BookingCreator, BookingDeleter {
 
-    private final BookingDomainService bookingDomainService;
-    private final UserPersistence userPersistence;
+    private final BookingService bookingService;
+    private final BookerPersistence userPersistence;
     private final ParkingSpotPersistence parkingSpotPersistence;
 
     @Override
@@ -25,7 +25,7 @@ public class BookingApplicationService implements BookingCreator, BookingDeleter
         var booker = userPersistence.loadById(userId);
         var parkingSpot = parkingSpotPersistence.loadById(spotId);
 
-        bookingDomainService.createBooking(booker, parkingSpot);
+        bookingService.createBooking(booker, parkingSpot);
     }
 
     @Override
@@ -35,6 +35,6 @@ public class BookingApplicationService implements BookingCreator, BookingDeleter
         var booker = userPersistence.loadById(userId);
         var parkingSpot = parkingSpotPersistence.loadById(spotId);
 
-        bookingDomainService.deleteBooking(booker, parkingSpot);
+        bookingService.deleteBooking(booker, parkingSpot);
     }
 }

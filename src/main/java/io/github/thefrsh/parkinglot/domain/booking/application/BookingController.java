@@ -1,4 +1,4 @@
-package io.github.thefrsh.parkinglot.domain.booking.application.controller;
+package io.github.thefrsh.parkinglot.domain.booking.application;
 
 import io.github.thefrsh.parkinglot.domain.booking.domain.port.incoming.BookingCreator;
 import io.github.thefrsh.parkinglot.domain.booking.domain.port.incoming.BookingDeleter;
@@ -13,7 +13,7 @@ import javax.validation.constraints.Min;
 @RestController
 @RequestMapping(path = "/api/users")
 @RequiredArgsConstructor
-public class BookingController {
+class BookingController {
 
     private final BookingCreator bookingCreator;
     private final BookingDeleter bookingDeleter;

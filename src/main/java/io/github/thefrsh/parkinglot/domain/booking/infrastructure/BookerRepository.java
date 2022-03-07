@@ -1,6 +1,6 @@
-package io.github.thefrsh.parkinglot.domain.booking.infrastructure.repository;
+package io.github.thefrsh.parkinglot.domain.booking.infrastructure;
 
-import io.github.thefrsh.parkinglot.infrastructure.model.User;
+import io.github.thefrsh.parkinglot.domain.booking.domain.model.Booker;
 import io.vavr.control.Option;
 import org.springframework.data.jpa.repository.Lock;
 import org.springframework.data.repository.Repository;
@@ -9,12 +9,12 @@ import javax.persistence.LockModeType;
 
 /**
  * Repository interface to manage User entity persistence
- * Please see {@link User}
+ * Please see {@link Booker}
  *
  * @author Michal Broniewicz
  */
-public interface UserRepository extends Repository<User, Long> {
+interface BookerRepository extends Repository<Booker, Long> {
 
     @Lock(value = LockModeType.PESSIMISTIC_WRITE)
-    Option<User> findById(Long id);
+    Option<Booker> findById(Long id);
 }

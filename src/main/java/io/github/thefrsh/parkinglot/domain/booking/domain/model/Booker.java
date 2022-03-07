@@ -1,29 +1,28 @@
-package io.github.thefrsh.parkinglot.infrastructure.model;
+package io.github.thefrsh.parkinglot.domain.booking.domain.model;
 
-import io.github.thefrsh.parkinglot.domain.booking.domain.model.ParkingSpotBooker;
-import io.github.thefrsh.parkinglot.domain.booking.domain.troubleshooting.exception.BookingException;
-import lombok.*;
-import org.hibernate.validator.constraints.Length;
+import io.github.thefrsh.parkinglot.domain.booking.domain.BookingException;
+import io.github.thefrsh.parkinglot.domain.sharedkernel.BaseAggregateRoot;
+import io.github.thefrsh.parkinglot.domain.sharedkernel.annotation.DomainAggregateRoot;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionDefinition;
+import org.springframework.transaction.support.TransactionTemplate;
 
 import javax.persistence.*;
 import java.util.List;
 
 /**
- * User entity representing the user of the system
+ * User entity representing parking spot booker
  * @author Michal Broniewicz
  */
 @Entity
 @Getter
 @NoArgsConstructor
-public class User implements ParkingSpotBooker {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Length(min = 2, max = 20)
-    @Column(nullable = false, unique = true)
-    private String name;
+@Table(name = "users")
+@DomainAggregateRoot
+public class Booker extends BaseAggregateRoot {
 
     @OneToMany
     @JoinTable(
@@ -39,28 +38,27 @@ public class User implements ParkingSpotBooker {
         return io.vavr.collection.List.ofAll(bookedSpots);
     }
 
-    @Override
     public void book(ParkingSpot parkingSpot) {
 
         getBookedSpots()
-                .find(spot -> spot.getId().equals(parkingSpot.getId()))
+                .find(spot -> spot.equals(parkingSpot))
                 .onEmpty(() -> bookedSpots.add(parkingSpot))
                 .peek(bookedSpot -> {
                     throw new BookingException(
-                            String.format("Parking spot %d has been already booked by user %d", bookedSpot.getId(), id)
+                            String.format("Parking spot has been already booked by user %d", id)
                     );
                 });
     }
 
-    @Override
     public void unbook(ParkingSpot parkingSpot) {
 
         getBookedSpots()
-                .find(spot -> spot.getId().equals(parkingSpot.getId()))
+                .find(spot -> spot.equals(parkingSpot))
                 .peek(spot -> bookedSpots.remove(parkingSpot))
                 .onEmpty(() -> {
                     throw new BookingException(
-                            String.format("Parking spot %d is not booked by user %d", parkingSpot.getId(), id));
+                            String.format("Parking spot is not booked by user %d", id));
                 });
     }
 }
+

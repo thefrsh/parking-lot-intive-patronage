@@ -1,9 +1,8 @@
-package io.github.thefrsh.parkinglot.domain.booking.infrastructure.repository;
+package io.github.thefrsh.parkinglot.domain.booking.infrastructure;
 
-import io.github.thefrsh.parkinglot.infrastructure.model.ParkingSpot;
+import io.github.thefrsh.parkinglot.domain.booking.domain.model.ParkingSpot;
 import io.vavr.collection.List;
 import io.vavr.control.Option;
-import org.springframework.data.repository.NoRepositoryBean;
 import org.springframework.data.repository.Repository;
 
 /**
@@ -12,8 +11,7 @@ import org.springframework.data.repository.Repository;
  *
  * @author Michal Broniewicz
  */
-@NoRepositoryBean
-public interface ParkingSpotRepository extends Repository<ParkingSpot, Long> {
+interface ParkingSpotRepository extends Repository<ParkingSpot, Long> {
 
     Option<ParkingSpot> findById(Long id);
 
