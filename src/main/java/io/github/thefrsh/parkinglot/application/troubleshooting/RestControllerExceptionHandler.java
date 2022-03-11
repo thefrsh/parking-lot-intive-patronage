@@ -18,7 +18,7 @@ import java.util.Map;
  * @author Michal Broniewicz
  */
 @RestControllerAdvice
-public class RestControllerExceptionHandler {
+class RestControllerExceptionHandler {
 
     /**
      * Resolves {@link ConstraintViolationException}

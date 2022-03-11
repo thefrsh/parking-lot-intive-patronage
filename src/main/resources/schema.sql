@@ -1,18 +1,20 @@
-CREATE TABLE IF NOT EXISTS user (
+CREATE TABLE IF NOT EXISTS users (
     id      BIGINT          NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    name    VARCHAR(20)     NOT NULL UNIQUE
+    name    VARCHAR(20)     NOT NULL UNIQUE,
+    uuid    VARCHAR         NOT NULL UNIQUE
 );
 
-CREATE TABLE IF NOT EXISTS parking_spot (
+CREATE TABLE IF NOT EXISTS parking_spots (
     id          BIGINT          NOT NULL PRIMARY KEY AUTO_INCREMENT,
     number      INT             NOT NULL,
     storey      INT             NOT NULL,
-    disability  BOOL            NOT NULL
+    disability  BOOL            NOT NULL,
+    uuid        VARCHAR         NOT NULL UNIQUE
 );
 
 CREATE TABLE IF NOT EXISTS users_spots_bookings (
     user_id                      BIGINT,
     parking_spot_id              BIGINT,
-    FOREIGN KEY(user_id)         REFERENCES user(id),
-    FOREIGN KEY(parking_spot_id) REFERENCES parking_spot(id)
+    FOREIGN KEY(user_id)         REFERENCES users(id),
+    FOREIGN KEY(parking_spot_id) REFERENCES parking_spots(id)
 )

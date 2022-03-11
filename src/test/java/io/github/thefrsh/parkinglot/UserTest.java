@@ -4,8 +4,8 @@ import static io.restassured.RestAssured.*;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.is;
 
-import io.github.thefrsh.parkinglot.domain.booking.infrastructure.repository.UserRepository;
-import io.github.thefrsh.parkinglot.infrastructure.model.ParkingSpot;
+import io.github.thefrsh.parkinglot.domain.booking.domain.port.secondary.BookerPersistence;
+import io.github.thefrsh.parkinglot.domain.booking.domain.model.ParkingSpot;
 import io.restassured.RestAssured;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -22,7 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserTest {
 
     @Autowired
-    private UserRepository userRepository;
+    private BookerPersistence userPersistence;
 
     @LocalServerPort
     private int port;
@@ -159,7 +159,7 @@ public class UserTest {
     public void userOwningOneParkingSpotIsGiven_whenGettingBookedSpots_shouldReturnOkAndParkingSpotsList() {
 
         final int userId = 1;
-        var user = userRepository.findById((long) userId).get();
+        var user = userPersistence.loadById((long) userId);
 
         var expectedParkingSpotIds = user.getBookedSpots()
                 .map(ParkingSpot::getId)
@@ -173,8 +173,8 @@ public class UserTest {
                .get()
         .then()
                 .statusCode(HttpStatus.OK.value())
-                .body("_embedded.parkingSpot.size()", is(expectedParkingSpotIds.length))
-                .body("_embedded.parkingSpot.id", containsInAnyOrder(expectedParkingSpotIds));
+                .body("_embedded.parking-spot.size()", is(expectedParkingSpotIds.length))
+                .body("_embedded.parking-spot.id", containsInAnyOrder(expectedParkingSpotIds));
     }
 
     private String getBookingPath(int userId, int parkingSpotId) {
