@@ -1,6 +1,6 @@
 package io.github.thefrsh.parkinglot;
 
-import io.github.thefrsh.parkinglot.domain.booking.domain.port.outgoing.ParkingSpotPersistence;
+import io.github.thefrsh.parkinglot.domain.booking.domain.port.secondary.ParkingSpotPersistence;
 import io.github.thefrsh.parkinglot.domain.booking.domain.model.ParkingSpot;
 import io.restassured.RestAssured;
 import org.junit.jupiter.api.BeforeEach;
@@ -64,7 +64,7 @@ public class ParkingSpotTest {
                 .get()
         .then()
                 .statusCode(HttpStatus.OK.value())
-                .body("_embedded.parkingSpot.size()", is(expectedParkingSpotIds.length))
-                .body("_embedded.parkingSpot.id", containsInAnyOrder(expectedParkingSpotIds));
+                .body("_embedded.parking-spot.size()", is(expectedParkingSpotIds.length))
+                .body("_embedded.parking-spot.id", containsInAnyOrder(expectedParkingSpotIds));
     }
 }

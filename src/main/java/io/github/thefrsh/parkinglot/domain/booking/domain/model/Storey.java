@@ -13,18 +13,18 @@ class Storey implements Serializable {
 
     @Min(1)
     @Column(nullable = false)
-    private Long value;
+    private Integer storey;
 
     protected Storey() {
 
     }
 
-    private Storey(Long value) {
+    private Storey(Integer value) {
 
-        this.value = value;
+        this.storey = value;
     }
 
-    public Storey from(Long value) {
+    public Storey from(Integer value) {
 
         return new Storey(value);
     }

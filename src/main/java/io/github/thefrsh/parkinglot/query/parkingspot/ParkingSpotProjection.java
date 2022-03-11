@@ -1,4 +1,4 @@
-package io.github.thefrsh.parkinglot.query;
+package io.github.thefrsh.parkinglot.query.parkingspot;
 
 import io.github.thefrsh.parkinglot.domain.booking.domain.model.Booker;
 import lombok.AccessLevel;
@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor
 @Table(name = "parking_spots")
-class ParkingSpotProjection {
+public class ParkingSpotProjection {
 
     @Id
     private Long id;

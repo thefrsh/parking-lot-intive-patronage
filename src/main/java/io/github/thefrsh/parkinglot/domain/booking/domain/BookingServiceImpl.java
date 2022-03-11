@@ -13,6 +13,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 class BookingServiceImpl implements BookingService {
 
+    private final BookableSpecification bookableSpecification;
+
     /**
      * Books the parking spot {@code parkingSpot} for the user {@code booker}
      *
@@ -23,16 +25,13 @@ class BookingServiceImpl implements BookingService {
     @Override
     public void createBooking(Booker booker, ParkingSpot parkingSpot) {
 
-        if (parkingSpot.bookable()) {
-
-            booker.book(parkingSpot);
-        }
-        else {
-
-            throw new BookingException(
-                    String.format("Parking spot with id %d has been already taken", parkingSpot.getId())
-            );
-        }
+        bookableSpecification.ifSatisifed(parkingSpot)
+                .then(booker::book)
+                .otherwise(() -> {
+                    throw new BookingException(
+                            String.format("Parking spot with id %d has been already taken", parkingSpot.getId())
+                    );
+                });
     }
 
     /**

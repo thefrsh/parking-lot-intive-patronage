@@ -1,8 +1,9 @@
 package io.github.thefrsh.parkinglot.domain.booking.infrastructure;
 
-import io.github.thefrsh.parkinglot.domain.booking.domain.port.outgoing.ParkingSpotPersistence;
+import io.github.thefrsh.parkinglot.domain.booking.domain.port.secondary.ParkingSpotPersistence;
 import io.github.thefrsh.parkinglot.domain.booking.domain.model.ParkingSpot;
 import io.github.thefrsh.parkinglot.domain.sharedkernel.annotation.DomainRepository;
+import io.github.thefrsh.parkinglot.infrastructure.persistence.ResourceNotFoundException;
 import io.vavr.collection.List;
 import lombok.RequiredArgsConstructor;
 

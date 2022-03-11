@@ -1,9 +1,9 @@
 package io.github.thefrsh.parkinglot.domain.booking.application;
 
-import io.github.thefrsh.parkinglot.domain.booking.domain.port.incoming.BookingCreator;
-import io.github.thefrsh.parkinglot.domain.booking.domain.port.incoming.BookingDeleter;
-import io.github.thefrsh.parkinglot.domain.booking.domain.port.outgoing.ParkingSpotPersistence;
-import io.github.thefrsh.parkinglot.domain.booking.domain.port.outgoing.BookerPersistence;
+import io.github.thefrsh.parkinglot.domain.booking.domain.port.primary.BookingCreator;
+import io.github.thefrsh.parkinglot.domain.booking.domain.port.primary.BookingDeleter;
+import io.github.thefrsh.parkinglot.domain.booking.domain.port.secondary.ParkingSpotPersistence;
+import io.github.thefrsh.parkinglot.domain.booking.domain.port.secondary.BookerPersistence;
 import io.github.thefrsh.parkinglot.domain.booking.domain.BookingService;
 import io.github.thefrsh.parkinglot.domain.sharedkernel.annotation.ApplicationService;
 import lombok.RequiredArgsConstructor;

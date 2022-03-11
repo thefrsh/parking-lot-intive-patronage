@@ -1,4 +1,4 @@
-package io.github.thefrsh.parkinglot.query;
+package io.github.thefrsh.parkinglot.query.parkingspot;
 
 import io.github.thefrsh.parkinglot.domain.sharedkernel.annotation.Finder;
 import io.vavr.collection.List;

@@ -19,6 +19,11 @@ public class BaseEntity {
     @Column(nullable = false, updatable = false)
     private String uuid;
 
+    public Long getId() {
+
+        return id;
+    }
+
     @Override
     public boolean equals(Object o) {
 

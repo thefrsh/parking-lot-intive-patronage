@@ -1,4 +1,4 @@
-package io.github.thefrsh.parkinglot.domain.booking.domain.port.incoming;
+package io.github.thefrsh.parkinglot.domain.booking.domain.port.primary;
 
 public interface BookingDeleter {
 

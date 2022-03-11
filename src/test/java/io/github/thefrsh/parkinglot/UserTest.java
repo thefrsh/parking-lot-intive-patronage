@@ -4,7 +4,7 @@ import static io.restassured.RestAssured.*;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.is;
 
-import io.github.thefrsh.parkinglot.domain.booking.domain.port.outgoing.BookerPersistence;
+import io.github.thefrsh.parkinglot.domain.booking.domain.port.secondary.BookerPersistence;
 import io.github.thefrsh.parkinglot.domain.booking.domain.model.ParkingSpot;
 import io.restassured.RestAssured;
 import org.junit.jupiter.api.BeforeEach;
@@ -173,8 +173,8 @@ public class UserTest {
                .get()
         .then()
                 .statusCode(HttpStatus.OK.value())
-                .body("_embedded.parkingSpot.size()", is(expectedParkingSpotIds.length))
-                .body("_embedded.parkingSpot.id", containsInAnyOrder(expectedParkingSpotIds));
+                .body("_embedded.parking-spot.size()", is(expectedParkingSpotIds.length))
+                .body("_embedded.parking-spot.id", containsInAnyOrder(expectedParkingSpotIds));
     }
 
     private String getBookingPath(int userId, int parkingSpotId) {
