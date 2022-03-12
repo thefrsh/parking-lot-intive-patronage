@@ -15,9 +15,7 @@ Build and package (without testing)
 Run packaged application  
 `java -jar target/parking-lot-intive-patronage-1.0.0-RELEASE.jar`
 ## Concept  
-For testing purposes, application uses **H2** in-memory database to store example data. It's initialized and seeded by SQL scripts included in the project directory:  
-- **schema.sql** - contains DDL defining database structure and tables specification  
-- **data.sql** - example data: one user and ten of parking spots  
+Application uses **PostgreSQL** database which can be migrated with **Flyway** and SQL scripts contained in `resources/db directory`
   
 Application runs on **8080** port by default. It provides several endpoints to perform basic domain operations described in task specification. Communication shall be done by using **HTTP** protocol. Response bodies are returned as **JSON**.  
 ## API endpoints

@@ -4,28 +4,59 @@ import static io.restassured.RestAssured.*;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.is;
 
+import io.github.thefrsh.parkinglot.container.TestPostgresqlContainer;
 import io.github.thefrsh.parkinglot.domain.booking.domain.port.secondary.BookerPersistence;
 import io.github.thefrsh.parkinglot.domain.booking.domain.model.ParkingSpot;
 import io.restassured.RestAssured;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.flywaydb.core.Flyway;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
-import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.DynamicPropertyRegistry;
+import org.springframework.test.context.DynamicPropertySource;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.transaction.annotation.Transactional;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
 
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
+@Testcontainers
+@TestInstance(value = TestInstance.Lifecycle.PER_CLASS)
+@Sql(scripts = "classpath:db/data/clear-seed.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class UserTest {
-
-    @Autowired
-    private BookerPersistence userPersistence;
+class UserTest {
 
     @LocalServerPort
     private int port;
+
+    @Autowired
+    private Flyway flyway;
+
+    @Autowired
+    private BookerPersistence bookerPersistence;
+
+    @Container
+    private static final TestPostgresqlContainer container;
+
+    static {
+
+        container = new TestPostgresqlContainer("postgres");
+        container.start();
+    }
+
+    @DynamicPropertySource
+    static void overrideProperties(DynamicPropertyRegistry registry) {
+
+        registry.add("spring.datasource.url", container::getJdbcUrl);
+        registry.add("spring.flyway.url", container::getJdbcUrl);
+    }
+
+    @BeforeAll
+    void beforeClass() {
+
+        flyway.migrate();
+    }
 
     @BeforeEach
     void setUp() {
@@ -33,9 +64,15 @@ public class UserTest {
         RestAssured.port = port;
     }
 
+    @AfterAll
+    void afterClass() {
+
+        flyway.clean();
+    }
+
     @Test
     @DisplayName(value = "[Create booking] Non-existing user -> Not Found 404")
-    public void nonExistingUserIsGiven_whenBookingAttempt_thenReturnsNotFound() {
+    void nonExistingUserIsGiven_whenBookingAttempt_thenReturnsNotFound() {
 
         final int userId = 2;
         final int parkingSpotId = 10;
@@ -50,7 +87,7 @@ public class UserTest {
 
     @Test
     @DisplayName(value = "[Create booking] Non-existing parking spot -> Not Found 404")
-    public void nonExistingParkingSpotIsGiven_whenBookingAttempt_thenReturnsNotFound() {
+    void nonExistingParkingSpotIsGiven_whenBookingAttempt_thenReturnsNotFound() {
 
         final int userId = 1;
         final int parkingSpotId = 30;
@@ -65,7 +102,7 @@ public class UserTest {
 
     @Test
     @DisplayName(value = "[Create booking] Parking spot has been already booked -> Conflict 409")
-    public void alreadyBookedParkingSpotIsGiven_whenBookingAttempt_thenReturnsConflict() {
+    void alreadyBookedParkingSpotIsGiven_whenBookingAttempt_thenReturnsConflict() {
 
         final int userId = 1;
         final int parkingSpotId = 1;
@@ -80,7 +117,7 @@ public class UserTest {
 
     @Test
     @DisplayName(value = "[Create booking] Negative user Id -> Bad Request 400")
-    public void negativeUserIdIsGiven_whenBookingAttempt_thenReturnsBadRequest() {
+    void negativeUserIdIsGiven_whenBookingAttempt_thenReturnsBadRequest() {
 
         final int userId = -1;
         final int parkingSpotId = 1;
@@ -95,7 +132,7 @@ public class UserTest {
 
     @Test
     @DisplayName(value = "[Create booking] Negative parking spot Id -> Bad Request 400")
-    public void negativeParkingSpotIdIsGiven_whenBookingAttempt_thenReturnsBadRequest() {
+    void negativeParkingSpotIdIsGiven_whenBookingAttempt_thenReturnsBadRequest() {
 
         final int userId = 1;
         final int parkingSpotId = -1;
@@ -110,7 +147,7 @@ public class UserTest {
 
     @Test
     @DisplayName(value = "[Create booking] Existing user and free parking spot -> No Content 204")
-    public void existingUserIdAndNotBookedParkingSpotIsGiven_whenBookingAttempt_thenReturnsNoContent() {
+    void existingUserIdAndNotBookedParkingSpotIsGiven_whenBookingAttempt_thenReturnsNoContent() {
 
         final int userId = 1;
         final int parkingSpotId = 2;
@@ -125,7 +162,7 @@ public class UserTest {
 
     @Test
     @DisplayName(value = "[Delete booking] Parking spot that is not owned by user -> Conflict 409")
-    public void notOwnedParkingSpotIsGiven_whenDeleteBookingAttempt_thenReturnsConflict() {
+    void notOwnedParkingSpotIsGiven_whenDeleteBookingAttempt_thenReturnsConflict() {
 
         final int userId = 1;
         final int parkingSpotId = 2;
@@ -140,7 +177,7 @@ public class UserTest {
 
     @Test
     @DisplayName(value = "[Delete booking] Parking spot that is owned by user -> No Content 204")
-    public void ownedParkingSpotIsGiven_whenDeleteBookingAttempt_thenReturnsNoContent() {
+    void ownedParkingSpotIsGiven_whenDeleteBookingAttempt_thenReturnsNoContent() {
 
         final int userId = 1;
         final int parkingSpotId = 1;
@@ -156,10 +193,10 @@ public class UserTest {
     @Test
     @DisplayName(value = "[Get booked list] User owning one parking spot -> Ok 200")
     @Transactional
-    public void userOwningOneParkingSpotIsGiven_whenGettingBookedSpots_shouldReturnOkAndParkingSpotsList() {
+    void userOwningOneParkingSpotIsGiven_whenGettingBookedSpots_shouldReturnOkAndParkingSpotsList() {
 
         final int userId = 1;
-        var user = userPersistence.loadById((long) userId);
+        var user = bookerPersistence.loadById((long) userId);
 
         var expectedParkingSpotIds = user.getBookedSpots()
                 .map(ParkingSpot::getId)
@@ -170,7 +207,7 @@ public class UserTest {
                .basePath(getBookedPath())
                .param("id", userId)
         .when()
-               .get()
+                .get()
         .then()
                 .statusCode(HttpStatus.OK.value())
                 .body("_embedded.parking-spot.size()", is(expectedParkingSpotIds.length))
