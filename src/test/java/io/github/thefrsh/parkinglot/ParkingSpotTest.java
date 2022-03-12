@@ -1,29 +1,61 @@
 package io.github.thefrsh.parkinglot;
 
+import io.github.thefrsh.parkinglot.container.TestPostgresqlContainer;
 import io.github.thefrsh.parkinglot.domain.booking.domain.port.secondary.ParkingSpotPersistence;
 import io.github.thefrsh.parkinglot.domain.booking.domain.model.ParkingSpot;
 import io.restassured.RestAssured;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.flywaydb.core.Flyway;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
-import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.DynamicPropertyRegistry;
+import org.springframework.test.context.DynamicPropertySource;
+import org.springframework.test.context.jdbc.Sql;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
 
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.containsInAnyOrder;
+import static org.hamcrest.Matchers.is;
 
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
+@Testcontainers
+@TestInstance(value = TestInstance.Lifecycle.PER_CLASS)
+@Sql(scripts = "classpath:db/data/clear-seed.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class ParkingSpotTest {
+class ParkingSpotTest {
 
     @LocalServerPort
     private int port;
 
     @Autowired
+    private Flyway flyway;
+
+    @Autowired
     private ParkingSpotPersistence parkingSpotPersistence;
+
+    @Container
+    private static final TestPostgresqlContainer container;
+
+    static {
+
+        container = new TestPostgresqlContainer("postgres");
+        container.start();
+    }
+
+    @DynamicPropertySource
+    public static void overrideProperties(DynamicPropertyRegistry registry) {
+
+        registry.add("spring.datasource.url", container::getJdbcUrl);
+        registry.add("spring.flyway.url", container::getJdbcUrl);
+    }
+
+    @BeforeAll
+    void setupClass() {
+
+        flyway.migrate();
+    }
 
     @BeforeEach
     void setUp() {
@@ -33,7 +65,7 @@ public class ParkingSpotTest {
 
     @Test
     @DisplayName(value = "[Get parking spots] List of free parking spots -> Ok 200")
-    public void oneBookedParkingSpotIsGiven_whenGettingListOfFreeParkingSpots_thenReturnsOkAndParkingSpotsList() {
+    void oneBookedParkingSpotIsGiven_whenGettingListOfFreeParkingSpots_thenReturnsOkAndParkingSpotsList() {
 
         final boolean available = true;
 
@@ -42,7 +74,7 @@ public class ParkingSpotTest {
 
     @Test
     @DisplayName(value = "[Get parking spots] List of booked parking spots -> Ok 200")
-    public void oneBookedParkingSpotIsGiven_whenGettingListOfBookedParkingSpots_thenReturnsOkAndParkingSpotsList() {
+    void oneBookedParkingSpotIsGiven_whenGettingListOfBookedParkingSpots_thenReturnsOkAndParkingSpotsList() {
 
         final boolean available = false;
 

@@ -1,3 +1,7 @@
+DELETE FROM users_spots_bookings;
+DELETE FROM parking_spots;
+DELETE FROM users;
+
 INSERT INTO users (id, name, uuid) VALUES ( 1, 'example', 'b38a8a71-bde7-4c10-829e-9728bbb1e8ec' );
 
 INSERT INTO parking_spots (id, number, storey, disability, uuid)
