@@ -6,9 +6,6 @@ import io.github.thefrsh.parkinglot.domain.sharedkernel.annotation.DomainAggrega
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.transaction.PlatformTransactionManager;
-import org.springframework.transaction.TransactionDefinition;
-import org.springframework.transaction.support.TransactionTemplate;
 
 import javax.persistence.*;
 import java.util.List;
@@ -20,7 +17,7 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor
-@Table(name = "users")
+@Table(name = Tables.USERS)
 @DomainAggregateRoot
 public class Booker extends BaseAggregateRoot {
 
@@ -45,7 +42,7 @@ public class Booker extends BaseAggregateRoot {
                 .onEmpty(() -> bookedSpots.add(parkingSpot))
                 .peek(bookedSpot -> {
                     throw new BookingException(
-                            String.format("Parking spot has been already booked by user %d", id)
+                            "Parking spot has been already booked by user %d".formatted(id)
                     );
                 });
     }
@@ -57,8 +54,8 @@ public class Booker extends BaseAggregateRoot {
                 .peek(spot -> bookedSpots.remove(parkingSpot))
                 .onEmpty(() -> {
                     throw new BookingException(
-                            String.format("Parking spot is not booked by user %d", id));
+                            "Parking spot is not booked by user %d".formatted(id)
+                    );
                 });
     }
 }
-

@@ -16,7 +16,7 @@ import javax.persistence.*;
 @Entity
 @Getter
 @NoArgsConstructor
-@Table(name = "parking_spots")
+@Table(name = Tables.PARKING_SPOTS)
 @DomainEntity
 public class ParkingSpot extends BaseEntity {
 

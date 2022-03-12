@@ -9,11 +9,12 @@ import java.io.Serializable;
 
 @Embeddable
 @ValueObject
+@SuppressWarnings(value = "unused")
 class Storey implements Serializable {
 
     @Min(1)
     @Column(nullable = false)
-    private Integer storey;
+    private Integer storeyValue;
 
     protected Storey() {
 
@@ -21,7 +22,7 @@ class Storey implements Serializable {
 
     private Storey(Integer value) {
 
-        this.storey = value;
+        this.storeyValue = value;
     }
 
     public Storey from(Integer value) {
