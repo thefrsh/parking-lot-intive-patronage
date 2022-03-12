@@ -4,16 +4,17 @@ import io.github.thefrsh.parkinglot.domain.sharedkernel.annotation.ValueObject;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
-import javax.persistence.criteria.CriteriaBuilder;
 import javax.validation.constraints.Min;
+import java.io.Serializable;
 
 @Embeddable
 @ValueObject
-class Number {
+@SuppressWarnings(value = "unused")
+class Number implements Serializable {
 
     @Min(1)
     @Column(nullable = false)
-    private Integer number;
+    private Integer numberValue;
 
     protected Number() {
 
@@ -21,7 +22,7 @@ class Number {
 
     private Number(Integer value) {
 
-        this.number = value;
+        this.numberValue = value;
     }
 
     public Number from(Integer value) {
