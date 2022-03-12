@@ -10,23 +10,23 @@ import java.io.Serializable;
 @Embeddable
 @ValueObject
 @SuppressWarnings(value = "unused")
-class Storey implements Serializable {
+class NumberValue implements Serializable {
 
     @Min(1)
     @Column(nullable = false)
-    private Integer storeyValue;
+    private Integer number;
 
-    protected Storey() {
+    protected NumberValue() {
 
     }
 
-    private Storey(Integer value) {
+    private NumberValue(Integer value) {
 
-        this.storeyValue = value;
+        this.number = value;
     }
 
-    public Storey from(Integer value) {
+    public NumberValue from(Integer value) {
 
-        return new Storey(value);
+        return new NumberValue(value);
     }
 }

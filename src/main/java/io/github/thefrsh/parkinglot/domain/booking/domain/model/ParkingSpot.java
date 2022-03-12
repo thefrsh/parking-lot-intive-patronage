@@ -16,15 +16,15 @@ import javax.persistence.*;
 @Entity
 @Getter
 @NoArgsConstructor
-@Table(name = Tables.PARKING_SPOTS)
+@Table(name = "parking_spots")
 @DomainEntity
 public class ParkingSpot extends BaseEntity {
 
     @Embedded
-    private Number number;
+    private NumberValue number;
 
     @Embedded
-    private Storey storey;
+    private StoreyValue storey;
 
     @Column(nullable = false)
     private Boolean disability;

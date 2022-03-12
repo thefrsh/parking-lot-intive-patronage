@@ -89,14 +89,14 @@ class ParkingSpotTest {
                 .map(Long::intValue)
                 .toJavaArray();
 
-        given()
+        var r = given()
                 .basePath("/api/parking-spots/search/by-availability")
                 .param("available", available)
         .when()
                 .get()
         .then()
                 .statusCode(HttpStatus.OK.value())
-                .body("_embedded.parking-spot.size()", is(expectedParkingSpotIds.length))
-                .body("_embedded.parking-spot.id", containsInAnyOrder(expectedParkingSpotIds));
+                .body("_embedded.parking-spots.size()", is(expectedParkingSpotIds.length))
+                .body("_embedded.parking-spots.id", containsInAnyOrder(expectedParkingSpotIds));
     }
 }

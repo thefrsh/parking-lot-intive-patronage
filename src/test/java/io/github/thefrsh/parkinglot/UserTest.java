@@ -210,8 +210,8 @@ class UserTest {
                 .get()
         .then()
                 .statusCode(HttpStatus.OK.value())
-                .body("_embedded.parking-spot.size()", is(expectedParkingSpotIds.length))
-                .body("_embedded.parking-spot.id", containsInAnyOrder(expectedParkingSpotIds));
+                .body("_embedded.parking-spots.size()", is(expectedParkingSpotIds.length))
+                .body("_embedded.parking-spots.id", containsInAnyOrder(expectedParkingSpotIds));
     }
 
     private String getBookingPath(int userId, int parkingSpotId) {

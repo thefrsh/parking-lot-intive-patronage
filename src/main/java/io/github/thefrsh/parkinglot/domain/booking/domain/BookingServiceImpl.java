@@ -29,7 +29,7 @@ class BookingServiceImpl implements BookingService {
                 .then(booker::book)
                 .otherwise(() -> {
                     throw new BookingException(
-                            String.format("Parking spot with id %d has been already taken", parkingSpot.getId())
+                            "Parking spot with id %d has been already taken".formatted(parkingSpot.getId())
                     );
                 });
     }

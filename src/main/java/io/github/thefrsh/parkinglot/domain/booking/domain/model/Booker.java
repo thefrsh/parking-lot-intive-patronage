@@ -17,7 +17,7 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor
-@Table(name = Tables.USERS)
+@Table(name = "users")
 @DomainAggregateRoot
 public class Booker extends BaseAggregateRoot {
 
@@ -38,7 +38,7 @@ public class Booker extends BaseAggregateRoot {
     public void book(ParkingSpot parkingSpot) {
 
         getBookedSpots()
-                .find(spot -> spot.equals(parkingSpot))
+                .find(parkingSpot::equals)
                 .onEmpty(() -> bookedSpots.add(parkingSpot))
                 .peek(bookedSpot -> {
                     throw new BookingException(
@@ -50,8 +50,8 @@ public class Booker extends BaseAggregateRoot {
     public void unbook(ParkingSpot parkingSpot) {
 
         getBookedSpots()
-                .find(spot -> spot.equals(parkingSpot))
-                .peek(spot -> bookedSpots.remove(parkingSpot))
+                .find(parkingSpot::equals)
+                .peek(bookedSpots::remove)
                 .onEmpty(() -> {
                     throw new BookingException(
                             "Parking spot is not booked by user %d".formatted(id)
