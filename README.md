@@ -49,7 +49,7 @@ Status: 200 OK
 ```
 {
   "_embedded" : {
-    "parkingSpot" : [ {
+    "parking-spots" : [ {
       "id" : 1,
       "number" : 1,
       "storey" : 1,
@@ -57,13 +57,6 @@ Status: 200 OK
       "_links" : {
         "self" : {
           "href" : "http://localhost:8080/api/parking-spots/1"
-        },
-        "parkingSpot" : {
-          "href" : "http://localhost:8080/api/parking-spots/1{?projection}",
-          "templated" : true
-        },
-        "owner" : {
-          "href" : "http://localhost:8080/api/parking-spots/1/owner"
         }
       }
     } ]
@@ -95,7 +88,7 @@ Status: 200 OK
 ```
 {
   "_embedded" : {
-    "parkingSpot" : [ {
+    "parking-spots" : [ {
       "id" : 2,
       "number" : 2,
       "storey" : 1,
@@ -103,47 +96,6 @@ Status: 200 OK
       "_links" : {
         "self" : {
           "href" : "http://localhost:8080/api/parking-spots/2"
-        },
-        "parkingSpot" : {
-          "href" : "http://localhost:8080/api/parking-spots/2{?projection}",
-          "templated" : true
-        },
-        "owner" : {
-          "href" : "http://localhost:8080/api/parking-spots/2/owner"
-        }
-      }
-    }, {
-      "id" : 3,
-      "number" : 3,
-      "storey" : 1,
-      "disability" : false,
-      "_links" : {
-        "self" : {
-          "href" : "http://localhost:8080/api/parking-spots/3"
-        },
-        "parkingSpot" : {
-          "href" : "http://localhost:8080/api/parking-spots/3{?projection}",
-          "templated" : true
-        },
-        "owner" : {
-          "href" : "http://localhost:8080/api/parking-spots/3/owner"
-        }
-      }
-    }, {
-      "id" : 4,
-      "number" : 4,
-      "storey" : 1,
-      "disability" : true,
-      "_links" : {
-        "self" : {
-          "href" : "http://localhost:8080/api/parking-spots/4"
-        },
-        "parkingSpot" : {
-          "href" : "http://localhost:8080/api/parking-spots/4{?projection}",
-          "templated" : true
-        },
-        "owner" : {
-          "href" : "http://localhost:8080/api/parking-spots/4/owner"
         }
       }
     }, {
@@ -154,98 +106,26 @@ Status: 200 OK
       "_links" : {
         "self" : {
           "href" : "http://localhost:8080/api/parking-spots/5"
-        },
-        "parkingSpot" : {
-          "href" : "http://localhost:8080/api/parking-spots/5{?projection}",
-          "templated" : true
-        },
-        "owner" : {
-          "href" : "http://localhost:8080/api/parking-spots/5/owner"
         }
       }
     }, {
-      "id" : 6,
-      "number" : 1,
-      "storey" : 2,
-      "disability" : true,
-      "_links" : {
-        "self" : {
-          "href" : "http://localhost:8080/api/parking-spots/6"
-        },
-        "parkingSpot" : {
-          "href" : "http://localhost:8080/api/parking-spots/6{?projection}",
-          "templated" : true
-        },
-        "owner" : {
-          "href" : "http://localhost:8080/api/parking-spots/6/owner"
-        }
-      }
-    }, {
-      "id" : 7,
-      "number" : 2,
-      "storey" : 2,
-      "disability" : false,
-      "_links" : {
-        "self" : {
-          "href" : "http://localhost:8080/api/parking-spots/7"
-        },
-        "parkingSpot" : {
-          "href" : "http://localhost:8080/api/parking-spots/7{?projection}",
-          "templated" : true
-        },
-        "owner" : {
-          "href" : "http://localhost:8080/api/parking-spots/7/owner"
-        }
-      }
-    }, {
-      "id" : 8,
-      "number" : 3,
-      "storey" : 2,
-      "disability" : true,
-      "_links" : {
-        "self" : {
-          "href" : "http://localhost:8080/api/parking-spots/8"
-        },
-        "parkingSpot" : {
-          "href" : "http://localhost:8080/api/parking-spots/8{?projection}",
-          "templated" : true
-        },
-        "owner" : {
-          "href" : "http://localhost:8080/api/parking-spots/8/owner"
-        }
-      }
-    }, {
-      "id" : 9,
+      "id" : 4,
       "number" : 4,
-      "storey" : 2,
-      "disability" : false,
-      "_links" : {
-        "self" : {
-          "href" : "http://localhost:8080/api/parking-spots/9"
-        },
-        "parkingSpot" : {
-          "href" : "http://localhost:8080/api/parking-spots/9{?projection}",
-          "templated" : true
-        },
-        "owner" : {
-          "href" : "http://localhost:8080/api/parking-spots/9/owner"
-        }
-      }
-    }, {
-      "id" : 10,
-      "number" : 5,
-      "storey" : 2,
+      "storey" : 1,
       "disability" : true,
       "_links" : {
         "self" : {
-          "href" : "http://localhost:8080/api/parking-spots/10"
-        },
-        "parkingSpot" : {
-          "href" : "http://localhost:8080/api/parking-spots/10{?projection}",
-          "templated" : true
-        },
-        "owner" : {
-          "href" : "http://localhost:8080/api/parking-spots/10/owner"
+          "href" : "http://localhost:8080/api/parking-spots/4"
+        }
+      }
+    }, {
+      "id" : 3,
+      "number" : 3,
+      "storey" : 1,
+      "disability" : false,
+      "_links" : {
+        "self" : {
+          "href" : "http://localhost:8080/api/parking-spots/3"
         }
       }
     } ]

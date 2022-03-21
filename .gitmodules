@@ -1,0 +1,3 @@
+[submodule "ddd-cqrs-spring"]
+	path = ddd-cqrs-spring
+	url = https://github.com/thefrsh/ddd-cqrs-spring
