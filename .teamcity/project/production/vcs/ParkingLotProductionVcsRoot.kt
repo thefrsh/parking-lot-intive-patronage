@@ -5,7 +5,7 @@ import jetbrains.buildServer.configs.kotlin.v2019_2.vcs.GitVcsRoot
 
 object ParkingLotProductionVcsRoot : GitVcsRoot({
 
-    id = RelativeId(name)
+    id = RelativeId("ParkingLotProduction")
     name = javaClass.simpleName
     url = "https://github.com/thefrsh/parking-lot-intive-patronage.git"
     branch = "refs/heads/production"
