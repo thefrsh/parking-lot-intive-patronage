@@ -22,5 +22,5 @@ CMD ["java", "-jar", "application.jar", "--spring.profiles.active=default,develo
 
 FROM amazoncorretto:17-alpine AS production
 COPY --from=build /app/target/parking-lot-intive-patronage-1.0.0-RELEASE.jar /application.jar
-EXPOSE 8080
+EXPOSE 8081
 CMD ["java", "-jar", "application.jar", "--spring.profiles.active=default -Dserver.port=8081"]
