@@ -11,6 +11,6 @@ object ParkingLotProductionVcsRoot : GitVcsRoot({
     branch = "refs/heads/production"
     branchSpec = "+:refs/heads/"
     authMethod = uploadedKey {
-        uploadedKey = "id_rsa_teamcity"
+        uploadedKey = "id_ecdsa_teamcity"
     }
 })
